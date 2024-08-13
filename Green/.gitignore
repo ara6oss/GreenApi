@@ -1,0 +1,7 @@
+.venv
+venv/
+__pypackages__/
+db.sqlite3
+__pycache__/
+*.py[cod]
+*$py.class

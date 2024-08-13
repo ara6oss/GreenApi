@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма API Взаимодействия</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .controls {
+            flex: 1;
+            max-width: 300px;
+        }
+        .output {
+            flex: 2;
+            padding-left: 20px;
+            width: 100%;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+            white-space: pre-wrap; /* Перенос строк внутри блока */
+            word-wrap: break-word;
+            font-family: "Courier New", Courier, monospace; /* Шрифт для отображения кода */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="controls">
+        
+            <form method="post" action="{% url 'api:get_settings' %}">
+                {% csrf_token %}
+                <input type="text" name="idInstance" placeholder="idInstance">
+                <input type="text" name="apiTokenInstance" placeholder="ApiTokenInstance">
+                <button type="submit">getSetings</button>
+            </form>
+            
+
+
+            <form method="post" action="{% url 'api:get_state' %}">
+                {% csrf_token %}
+                <input type="hidden" name="idInstance" value="{{ request.POST.idInstance }}">
+                <input type="hidden" name="apiTokenInstance" value="{{ request.POST.apiTokenInstance }}">
+                <button type="submit">getState</button>
+            </form>
+            <button type="submit" name="action" value="getStateInstance">getStateInstance</button>
+            <input type="text" name="phoneNumber" placeholder="77771234567">
+            <textarea name="message" placeholder="Hello World!"></textarea>
+            <button type="submit" name="action" value="sendMessage">sendMessage</button>
+            <input type="text" name="filePhoneNumber" placeholder="77771234567">
+            <input type="text" name="fileUrl" placeholder="https://my.site.com/img/horse.png">
+            <button type="submit" name="action" value="sendFileByUrl">sendFileByUrl</button>
+        
+    </div>
+    <div class="output">
+        <h3>Ответ:</h3>
+        {% if response %}
+            <pre>{{ response|safe }}</pre>
+        {% else %}
+            <pre>{}</pre>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Interaction Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .controls {
+            flex: 1;
+            max-width: 300px;
+        }
+        .output {
+            flex: 2;
+            padding-left: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="controls">
+        <input type="text" id="idInstance" placeholder="idInstance">
+        <input type="text" id="apiTokenInstance" placeholder="ApiTokenInstance">
+        <button onclick="getSettings()">getSettings</button>
+        <button onclick="getStateInstance()">getStateInstance</button>
+        <input type="text" id="phoneNumber" placeholder="77771234567">
+        <textarea id="message" placeholder="Hello World!"></textarea>
+        <button onclick="sendMessage()">sendMessage</button>
+        <input type="text" id="filePhoneNumber" placeholder="77771234567">
+        <input type="text" id="fileUrl" placeholder="https://my.site.com/img/horse.png">
+        <button onclick="sendFileByUrl()">sendFileByUrl</button>
+    </div>
+    <div class="output">
+        <h3>Ответ:</h3>
+        <pre id="response">{}</pre>
+    </div>
+</div>
+
+<script>
+    function getSettings() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        // Example of what your fetch might look like
+        fetch(`/api/getSettings?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            });
+    }
+
+    function getStateInstance() {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiTokenInstance = document.getElementById('apiTokenInstance').value;
+        // Example of what your fetch might look like
+        fetch(`/api/getStateInstance?idInstance=${idInstance}&apiTokenInstance=${apiTokenInstance}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            });
+    }
+
+    function sendMessage() {
+        const phoneNumber = document.getElementById('phoneNumber').value;
+        const message = document.getElementById('message').value;
+        // Example of what your fetch might look like
+        fetch('/api/sendMessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ phoneNumber, message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+        });
+    }
+
+    function sendFileByUrl() {
+        const phoneNumber = document.getElementById('filePhoneNumber').value;
+        const fileUrl = document.getElementById('fileUrl').value;
+        // Example of what your fetch might look like
+        fetch('/api/sendFileByUrl', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ phoneNumber, fileUrl })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+        });
+    }
+</script>
+
+</body>
+</html>
