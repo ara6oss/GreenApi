@@ -85,20 +85,8 @@ def send_message(request):
         }
 
         payload_json = json.dumps(payload)
-
-        try:
-            # Отправляем POST-запрос к API
-            response = requests.request("POST", url, headers=headers, data=payload_json)
-            
-            # Обрабатываем ответ от API
-            if response.status_code == 200:
-                response_data = response.json()
-                return HttpResponse(f"Сообщение успешно отправлено! Ответ сервера: {response_data}")
-            else:
-                return HttpResponse(f"Ошибка при отправке сообщения: {response.status_code} {response.text}")
-        except requests.exceptions.RequestException as e:
-            return HttpResponse(f"Произошла ошибка при выполнении запроса: {str(e)}")
-    else:
+        response = requests.request("POST", url, headers=headers, data=payload_json)
+        response_data = response.json()
         return render(request, 'index.html', {'response': response_data})
     
 
@@ -123,18 +111,6 @@ def send_file(request):
         }
 
         payload_json = json.dumps(payload)
-
-        try:
-            # Отправляем POST-запрос к API
-            response = requests.request("POST", url, headers=headers, data=payload_json)
-            
-            # Обрабатываем ответ от API
-            if response.status_code == 200:
-                response_data = response.json()
-                return HttpResponse(f"Сообщение успешно отправлено! Ответ сервера: {response_data}")
-            else:
-                return HttpResponse(f"Ошибка при отправке сообщения: {response.status_code} {response.text}")
-        except requests.exceptions.RequestException as e:
-            return HttpResponse(f"Произошла ошибка при выполнении запроса: {str(e)}")
-    else:
+        response = requests.request("POST", url, headers=headers, data=payload_json)
+        response_data = response.json()
         return render(request, 'index.html', {'response': response_data})
