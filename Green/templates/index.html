@@ -53,7 +53,7 @@
                 {% csrf_token %}
                 <input type="text" name="idInstance" placeholder="idInstance">
                 <input type="text" name="apiTokenInstance" placeholder="ApiTokenInstance">
-                <button type="submit">getSetings</button>
+                <button type="submit">getSettings</button>
             </form>
             
 
@@ -62,15 +62,21 @@
                 {% csrf_token %}
                 <input type="hidden" name="idInstance" value="{{ request.POST.idInstance }}">
                 <input type="hidden" name="apiTokenInstance" value="{{ request.POST.apiTokenInstance }}">
-                <button type="submit">getState</button>
+                <button type="submit">getStateInstance</button>
             </form>
-            <button type="submit" name="action" value="getStateInstance">getStateInstance</button>
-            <input type="text" name="phoneNumber" placeholder="77771234567">
-            <textarea name="message" placeholder="Hello World!"></textarea>
-            <button type="submit" name="action" value="sendMessage">sendMessage</button>
-            <input type="text" name="filePhoneNumber" placeholder="77771234567">
-            <input type="text" name="fileUrl" placeholder="https://my.site.com/img/horse.png">
-            <button type="submit" name="action" value="sendFileByUrl">sendFileByUrl</button>
+            <form method="post" action="{% url 'api:send_message' %}">
+                {% csrf_token %}
+                <input type="text" name="phone_number" placeholder="77771234567">
+                <textarea name="message" placeholder="Hello World!"></textarea>
+                <button type="submit">sendMessage</button>
+            </form>
+            <form method='post' action="{% url 'api:send_file' %}">
+                {% csrf_token %}
+                <input type="text" name="phone_number" placeholder="77771234567">
+                <input type="text" name="file" placeholder="https://my.site.com/img/horse.png">
+                <input type="text" name="file_name" placeholder="horse.png">
+                <button type="submit">sendFileByUrl</button>
+            </form>
         
     </div>
     <div class="output">
