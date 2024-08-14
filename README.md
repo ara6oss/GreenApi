@@ -26,8 +26,7 @@
 
    ```bash
    pip install -r requirements.txt
-
-    
+   
 4. **Запуск сервера**:
 
     ```bash
