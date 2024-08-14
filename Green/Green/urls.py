@@ -21,6 +21,6 @@ from Api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('Api.urls', namespace='api')),
+    path('', include('Api.urls', namespace='api')),
 
 ]
